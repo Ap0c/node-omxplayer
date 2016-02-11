@@ -4,7 +4,7 @@ A library for controlling the Raspberry Pi omxplayer from Node.js.
 
 ## Get Started
 
-```
+```js
 // Import the module.
 var Omx = require('node-omxplayer');
 
@@ -45,6 +45,14 @@ Increases the volume.
 
 Decreases the volume.
 
+### player.fastFwd()
+
+Fast forwards playback.
+
+### player.rewind()
+
+Rewinds playback.
+
 ### player.fwd30()
 
 Skips playback forward by 30 seconds.
@@ -61,13 +69,57 @@ Skips playback forward by 600 seconds.
 
 Skips playback backward by 600 seconds.
 
+### player.quit()
+
+Quits the player.
+
 ### player.subtitles()
 
 Toggle subtitles.
 
-### player.quit()
+### player.info()
 
-Quits the player.
+Provides info on the currently playing file.
+
+### player.incSpeed()
+
+Increases playback speed.
+
+### player.decSpeed()
+
+Decreases playback speed.
+
+### player.prevChapter()
+
+Skips to previous chapter.
+
+### player.nextChapter()
+
+Skips to next chapter.
+
+### player.prevAudio()
+
+Skips to previous audio stream.
+
+### player.nextAudio()
+
+Skips to next audio stream.
+
+### player.prevSubtitle()
+
+Skips to previous subtitle stream.
+
+### player.nextSubtitle()
+
+Skips to next subtitle stream.
+
+### player.decSubDelay()
+
+Decrease subtitle delay by 250ms.
+
+### player.incSubDelay()
+
+Increase subtitle delay by 250ms.
 
 ### player.status
 

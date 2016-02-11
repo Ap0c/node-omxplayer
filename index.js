@@ -49,6 +49,7 @@ function Omx (source, output) {
 
 	player.stdin.setEncoding('utf-8');
 
+	// Simulates keypress to provide control.
 	function writeStdin (value) {
 
 		if (open) {
@@ -64,12 +65,25 @@ function Omx (source, output) {
 		pause: () => { writeStdin('p'); },
 		volUp: () => { writeStdin('+'); },
 		volDown: () => { writeStdin('-'); },
+		fastFwd: () => { writeStdin('>'); },
+		rewind: () => { writeStdin('<'); },
 		fwd30:() => { writeStdin('\u001b[C'); },
 		back30: () => { writeStdin('\u001b[D'); },
 		fwd600: () => { writeStdin('\u001b[A'); },
 		back600: () => { writeStdin('\u001b[B'); },
-		subtitles: () => { writeStdin('s'); },
 		quit: () => { writeStdin('q'); },
+		subtitles: () => { writeStdin('s'); },
+		info: () => { writeStdin('z'); },
+		incSpeed: () => { writeStdin('1'); },
+		decSpeed: () => { writeStdin('2'); },
+		prevChapter: () => { writeStdin('i'); },
+		nextChapter: () => { writeStdin('o'); },
+		prevAudio: () => { writeStdin('j'); },
+		nextAudio: () => { writeStdin('k'); },
+		prevSubtitle: () => { writeStdin('n'); },
+		nextSubtitle: () => { writeStdin('m'); },
+		decSubDelay: () => { writeStdin('d'); },
+		incSubDelay: () => { writeStdin('f'); },
 		get status () { return open; }
 	};
 
