@@ -68,6 +68,7 @@ function Omx (source, output) {
 		back30: () => { writeStdin('\u001b[D'); },
 		fwd600: () => { writeStdin('\u001b[A'); },
 		back600: () => { writeStdin('\u001b[B'); },
+		subtitles: () => { writeStdin('s'); },
 		quit: () => { writeStdin('q'); },
 		get status () { return open; }
 	};
