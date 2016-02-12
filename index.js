@@ -48,6 +48,14 @@ function Omx (source, output) {
 
 	// ----- Local Functions ----- //
 
+	// Marks player as closed.
+	function updateStatus () {
+
+		open = false;
+		omxplayer.emit('close');
+
+	}
+
 	// Spawns the omxplayer process.
 	function spawnPlayer (src, out) {
 
@@ -56,11 +64,7 @@ function Omx (source, output) {
 		open = true;
 
 		omxProcess.stdin.setEncoding('utf-8');
-
-		omxProcess.on('close', () => {
-			open = false;
-			omxplayer.emit('close');
-		});
+		omxProcess.on('close', updateStatus);
 
 		return omxProcess;
 
@@ -89,12 +93,13 @@ function Omx (source, output) {
 	omxplayer.newSource = (src, out) => {
 
 		if (open) {
-			writeStdin('q');
+
+			player.removeListener('close', updateStatus);
+			player.kill();
+
 		}
 
-		player.on('close', () => {
-			player = spawnPlayer(src, out);
-		});
+		player = spawnPlayer(src, out);
 
 	};
 
