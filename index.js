@@ -35,6 +35,14 @@ function buildArgs (source, givenOutput) {
 
 }
 
+// Spawns the omxplayer process.
+function spawnPlayer (source, output) {
+
+	let args = buildArgs(source, output);
+	return spawn('omxplayer', args);
+
+}
+
 
 // ----- Omx Class ----- //
 
@@ -43,9 +51,7 @@ function Omx (source, output) {
 	// ----- Local Vars ----- //
 
 	let omxplayer = new EventEmitter();
-
-	let args = buildArgs(source, output);
-	let player = spawn('omxplayer', args);
+	let player = spawnPlayer(source, output);
 	let open = true;
 
 	// ----- Setup ----- //
@@ -71,6 +77,17 @@ function Omx (source, output) {
 	}
 
 	// ----- Methods ----- //
+
+	// Restarts omxplayer with a new source.
+	omxplayer.newSource = (source, output) => {
+
+		if (open) {
+			writeStdin('q');
+		}
+
+		player = spawnPlayer(source, output);
+
+	};
 
 	omxplayer.play = () => { writeStdin('p'); };
 	omxplayer.pause = () => { writeStdin('p'); };
@@ -99,6 +116,8 @@ function Omx (source, output) {
 	Object.defineProperty(omxplayer, 'running', {
 		get: () => { return open; }
 	});
+
+	// ----- Return Object ----- //
 
 	return omxplayer;
 
