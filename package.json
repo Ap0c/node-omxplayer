@@ -1,11 +1,15 @@
 {
-  "name": "node-omx",
+  "name": "node-omxplayer",
   "version": "0.1.0",
-  "description": "Control omxplayer through node.",
+  "description": "A library for controlling the Raspberry Pi omxplayer from Node.js.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ap0c",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+  	"type": "git",
+  	"url": "https://github.com/Ap0c/node-omxplayer"
+  }
 }
