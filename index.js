@@ -51,10 +51,17 @@ function Omx (source, output) {
 	// ----- Local Vars ----- //
 
 	let omxplayer = new EventEmitter();
-	let player = spawnPlayer(source, output);
-	let open = true;
+	let player = null;
+	let open = false;
 
 	// ----- Setup ----- //
+
+	if (source) {
+
+		player = spawnPlayer(source, output);
+		open = true;
+
+	}
 
 	player.stdin.setEncoding('utf-8');
 
