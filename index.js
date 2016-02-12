@@ -35,14 +35,6 @@ function buildArgs (source, givenOutput) {
 
 }
 
-// Spawns the omxplayer process.
-function spawnPlayer (source, output) {
-
-	let args = buildArgs(source, output);
-	return spawn('omxplayer', args);
-
-}
-
 
 // ----- Omx Class ----- //
 
@@ -54,23 +46,25 @@ function Omx (source, output) {
 	let player = null;
 	let open = false;
 
-	// ----- Setup ----- //
+	// ----- Local Functions ----- //
 
-	if (source) {
+	// Spawns the omxplayer process.
+	function spawnPlayer (src, out) {
 
-		player = spawnPlayer(source, output);
+		let args = buildArgs(src, out);
+		let omxProcess = spawn('omxplayer', args);
 		open = true;
 
+		omxProcess.stdin.setEncoding('utf-8');
+
+		omxProcess.on('close', () => {
+			open = false;
+			omxplayer.emit('close');
+		});
+
+		return omxProcess;
+
 	}
-
-	player.stdin.setEncoding('utf-8');
-
-	player.on('close', () => {
-
-		open = false;
-		omxplayer.emit('close');
-
-	});
 
 	// Simulates keypress to provide control.
 	function writeStdin (value) {
@@ -83,16 +77,24 @@ function Omx (source, output) {
 
 	}
 
+	// ----- Setup ----- //
+
+	if (source) {
+		player = spawnPlayer(source, output);
+	}
+
 	// ----- Methods ----- //
 
 	// Restarts omxplayer with a new source.
-	omxplayer.newSource = (source, output) => {
+	omxplayer.newSource = (src, out) => {
 
 		if (open) {
 			writeStdin('q');
 		}
 
-		player = spawnPlayer(source, output);
+		player.on('close', () => {
+			player = spawnPlayer(src, out);
+		});
 
 	};
 
