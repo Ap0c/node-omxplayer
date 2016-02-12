@@ -72,29 +72,29 @@ function Omx (source, output) {
 
 	// ----- Methods ----- //
 
-	omxplayer.play = () => { writeStdin('p'); },
-	omxplayer.pause = () => { writeStdin('p'); },
-	omxplayer.volUp = () => { writeStdin('+'); },
-	omxplayer.volDown = () => { writeStdin('-'); },
-	omxplayer.fastFwd = () => { writeStdin('>'); },
-	omxplayer.rewind = () => { writeStdin('<'); },
-	omxplayer.fwd30 =() => { writeStdin('\u001b[C'); },
-	omxplayer.back30 = () => { writeStdin('\u001b[D'); },
-	omxplayer.fwd600 = () => { writeStdin('\u001b[A'); },
-	omxplayer.back600 = () => { writeStdin('\u001b[B'); },
-	omxplayer.quit = () => { writeStdin('q'); },
-	omxplayer.subtitles = () => { writeStdin('s'); },
-	omxplayer.info = () => { writeStdin('z'); },
-	omxplayer.incSpeed = () => { writeStdin('1'); },
-	omxplayer.decSpeed = () => { writeStdin('2'); },
-	omxplayer.prevChapter = () => { writeStdin('i'); },
-	omxplayer.nextChapter = () => { writeStdin('o'); },
-	omxplayer.prevAudio = () => { writeStdin('j'); },
-	omxplayer.nextAudio = () => { writeStdin('k'); },
-	omxplayer.prevSubtitle = () => { writeStdin('n'); },
-	omxplayer.nextSubtitle = () => { writeStdin('m'); },
-	omxplayer.decSubDelay = () => { writeStdin('d'); },
-	omxplayer.incSubDelay = () => { writeStdin('f'); }
+	omxplayer.play = () => { writeStdin('p'); };
+	omxplayer.pause = () => { writeStdin('p'); };
+	omxplayer.volUp = () => { writeStdin('+'); };
+	omxplayer.volDown = () => { writeStdin('-'); };
+	omxplayer.fastFwd = () => { writeStdin('>'); };
+	omxplayer.rewind = () => { writeStdin('<'); };
+	omxplayer.fwd30 =() => { writeStdin('\u001b[C'); };
+	omxplayer.back30 = () => { writeStdin('\u001b[D'); };
+	omxplayer.fwd600 = () => { writeStdin('\u001b[A'); };
+	omxplayer.back600 = () => { writeStdin('\u001b[B'); };
+	omxplayer.quit = () => { writeStdin('q'); };
+	omxplayer.subtitles = () => { writeStdin('s'); };
+	omxplayer.info = () => { writeStdin('z'); };
+	omxplayer.incSpeed = () => { writeStdin('1'); };
+	omxplayer.decSpeed = () => { writeStdin('2'); };
+	omxplayer.prevChapter = () => { writeStdin('i'); };
+	omxplayer.nextChapter = () => { writeStdin('o'); };
+	omxplayer.prevAudio = () => { writeStdin('j'); };
+	omxplayer.nextAudio = () => { writeStdin('k'); };
+	omxplayer.prevSubtitle = () => { writeStdin('n'); };
+	omxplayer.nextSubtitle = () => { writeStdin('m'); };
+	omxplayer.decSubDelay = () => { writeStdin('d'); };
+	omxplayer.incSubDelay = () => { writeStdin('f'); };
 
 	Object.defineProperty(omxplayer, 'running', {
 		get: () => { return open; }
