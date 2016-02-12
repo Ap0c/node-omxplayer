@@ -121,6 +121,6 @@ Decrease subtitle delay by 250ms.
 
 Increase subtitle delay by 250ms.
 
-### player.status
+### player.running
 
 Boolean giving the playback status, `true` if the player is still active, `false` if it has ended or the player has quit.
