@@ -143,3 +143,13 @@ Boolean giving the playback status, `true` if the player is still active, `false
 ### 'close'
 
 Fired when playback has finished.
+
+## Errors
+
+### 'Output <foo> not allowed.'
+
+Incorrect audio output type passed to the player, see `Omx` in the API section above. Can occur for the `Omx` constructor and the `newSource` method.
+
+### 'Player is closed.'
+
+An attempt has been made to send a command to the player after it has closed. Prevent this from happening by checking if it is still running using the `running` getter method. Can occur for any of the player methods except `newSource`.
