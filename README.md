@@ -27,11 +27,11 @@ sudo apt-get install omxplayer
 
 ## API
 
-### Omx(*source*, *[output]*)
+### Omx(*[source]*, *[output]*)
 
 The constructor method, used to launch omxplayer with a source.
 
-- `source`: The playback source, any audio or video file (or stream) that omxplayer is capable of playing.
+- `source` (optional): The playback source, any audio or video file (or stream) that omxplayer is capable of playing. If left blank, the player will initialise and wait for a source to be added later with the `newSource` method.
 
 - `output` (optional): The audio output, if left blank will default to 'local', can be one of:
     + local - the analog output (3.5mm jack).
