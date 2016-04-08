@@ -65,6 +65,12 @@ function Omx (source, output) {
 
 		omxProcess.stdin.setEncoding('utf-8');
 		omxProcess.on('close', updateStatus);
+		omxProcess.on('error', () => {
+
+			open = false;
+			throw new Error('Problem running omxplayer, is it installed?.');
+
+		});
 
 		return omxProcess;
 
