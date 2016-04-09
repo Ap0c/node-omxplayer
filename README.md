@@ -144,6 +144,10 @@ Boolean giving the playback status, `true` if the player is still active, `false
 
 Fired when playback has finished.
 
+### 'error'
+
+Occurs when there is a problem with omxplayer. Includes a message with more information about the error.
+
 ## Errors
 
 ### 'Output <foo> not allowed.'
