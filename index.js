@@ -56,6 +56,14 @@ function Omx (source, output) {
 
 	}
 
+	// Emits an error event, with a given message.
+	function emitError (message) {
+
+		open = false;
+		omxplayer.emit('error', message);
+
+	}
+
 	// Spawns the omxplayer process.
 	function spawnPlayer (src, out) {
 
@@ -65,11 +73,9 @@ function Omx (source, output) {
 
 		omxProcess.stdin.setEncoding('utf-8');
 		omxProcess.on('close', updateStatus);
+
 		omxProcess.on('error', () => {
-
-			open = false;
-			throw new Error('Problem running omxplayer, is it installed?.');
-
+			emitError('Problem running omxplayer, is it installed?.');
 		});
 
 		return omxProcess;
