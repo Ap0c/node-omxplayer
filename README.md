@@ -17,6 +17,8 @@ player.volUp();
 player.quit();
 ```
 
+**Warning**: If you quit node before quitting the player, there is a chance of a zombie process being created, which will persist until the current audio/video track ends.
+
 ## Installation
 
 ```

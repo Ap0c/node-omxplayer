@@ -106,12 +106,15 @@ function Omx (source, output) {
 
 		if (open) {
 
+			player.on('close', () => { player = spawnPlayer(src, out); });
 			player.removeListener('close', updateStatus);
-			player.kill();
+			writeStdin('q');
+
+		} else {
+
+			player = spawnPlayer(src, out);
 
 		}
-
-		player = spawnPlayer(src, out);
 
 	};
 
