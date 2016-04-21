@@ -1,6 +1,6 @@
 # Node-Omxplayer
 
-A library for controlling the Raspberry Pi omxplayer from Node.js.
+A library for controlling the Raspberry Pi [omxplayer](https://github.com/popcornmix/omxplayer) from Node.js.
 
 ## Get Started
 
@@ -44,9 +44,11 @@ The constructor method, used to launch omxplayer with a source.
     + hdmi - the HDMI port audio output.
     + both - both of the above outputs.
     
-- `loop` (optional): Loop state, if set to true, will loop file if it is seekable.  If left blank will default to false.
+- `loop` (optional): Loop state, if set to true, will loop file if it is seekable. If left blank will default to false.
 
-- `initialVolume` (optional): The initial volume, omxplayer will start with this value (in millibels).  If left blank will default to 0.
+    **Warning**: As stated above, if you quit node before quitting the player, a zombie process may be created. If this occurs when the loop option is in place, the `omxplayer` process may run indefinitely.
+
+- `initialVolume` (optional): The initial volume, omxplayer will start with this value (in millibels). If left blank will default to 0.
 
 ### player.newSource(*source*, *[output]*, *[loop]*, *[initialVolume]*)
 
