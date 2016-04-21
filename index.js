@@ -15,7 +15,7 @@ let ALLOWED_OUTPUTS = ['hdmi', 'local', 'both'];
 // ----- Functions ----- //
 
 // Creates an array of arguments to pass to omxplayer.
-function buildArgs (source, givenOutput) {
+function buildArgs (source, givenOutput, loop, initialVolume) {
 
 	let output = '';
 
@@ -30,15 +30,27 @@ function buildArgs (source, givenOutput) {
 	} else {
 		output = 'local';
 	}
+	
+	let args = [source, '-o', output]
+	
+	// Handle the loop argument, if provided
+	if (loop) {
+		args.push('--loop');
+	}
 
-	return [source, '-o', output];
+	// Handle the initial volume argument, if provided
+	if (Number.isInteger(initialVolume)) {
+		args.push('--vol', initialVolume);
+	}
+	
+	return args;
 
 }
 
 
 // ----- Omx Class ----- //
 
-function Omx (source, output) {
+function Omx (source, output, loop, initialVolume) {
 
 	// ----- Local Vars ----- //
 
@@ -65,9 +77,9 @@ function Omx (source, output) {
 	}
 
 	// Spawns the omxplayer process.
-	function spawnPlayer (src, out) {
+	function spawnPlayer (src, out, loop, initialVolume) {
 
-		let args = buildArgs(src, out);
+		let args = buildArgs(src, out, loop, initialVolume);
 		let omxProcess = spawn('omxplayer', args);
 		open = true;
 
@@ -96,23 +108,23 @@ function Omx (source, output) {
 	// ----- Setup ----- //
 
 	if (source) {
-		player = spawnPlayer(source, output);
+		player = spawnPlayer(source, output, loop, initialVolume);
 	}
 
 	// ----- Methods ----- //
 
 	// Restarts omxplayer with a new source.
-	omxplayer.newSource = (src, out) => {
+	omxplayer.newSource = (src, out, loop, initialVolume) => {
 
 		if (open) {
 
-			player.on('close', () => { player = spawnPlayer(src, out); });
+			player.on('close', () => { player = spawnPlayer(src, out, loop, initialVolume); });
 			player.removeListener('close', updateStatus);
 			writeStdin('q');
 
 		} else {
 
-			player = spawnPlayer(src, out);
+			player = spawnPlayer(src, out, loop, initialVolume);
 
 		}
 
