@@ -33,7 +33,7 @@ sudo apt-get install omxplayer
 
 ## API
 
-### Omx(*[source]*, *[output]*)
+### Omx(*[source]*, *[output]*, *[loop]*, *[initialVolume]*)
 
 The constructor method, used to launch omxplayer with a source.
 
@@ -43,8 +43,12 @@ The constructor method, used to launch omxplayer with a source.
     + local - the analog output (3.5mm jack).
     + hdmi - the HDMI port audio output.
     + both - both of the above outputs.
+    
+- `loop` (optional): Loop state, if set to true, will loop file if it is seekable.  If left blank will default to false.
 
-### player.newSource(*source*, *[output]*)
+- `initialVolume` (optional): The initial volume, omxplayer will start with this value (in millibels).  If left blank will default to 0.
+
+### player.newSource(*source*, *[output]*, *[loop]*, *[initialVolume]*)
 
 Starts playback of a new source, the arguments are identical to those of the `Omx` constructor method described above. If a file is currently playing, ends this playback and begins the new source.
 
