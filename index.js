@@ -31,7 +31,7 @@ function buildArgs (source, givenOutput, loop, initialVolume) {
 		output = 'local';
 	}
 	
-	let args = [source, '-o', output]
+	let args = [source, '-o', output, '--blank'];
 	
 	// Handle the loop argument, if provided
 	if (loop) {
