@@ -15,8 +15,7 @@ let ALLOWED_OUTPUTS = ['hdmi', 'local', 'both'];
 // ----- Functions ----- //
 
 // Creates an array of arguments to pass to omxplayer.
-function buildArgs (source, givenOutput, loop, initialVolume) {
-
+function buildArgs (source, givenOutput, loop, initialVolume, showOsd) {
 	let output = '';
 
 	if (givenOutput) {
@@ -30,9 +29,14 @@ function buildArgs (source, givenOutput, loop, initialVolume) {
 	} else {
 		output = 'local';
 	}
-	
-	let args = [source, '-o', output, '--blank'];
-	
+
+	let osd = false;
+	if (showOsd) {
+		osd = showOsd;
+	}
+
+	let args = [source, '-o', output, '--blank', osd ? '' : '--no-osd'];
+
 	// Handle the loop argument, if provided
 	if (loop) {
 		args.push('--loop');
@@ -42,7 +46,7 @@ function buildArgs (source, givenOutput, loop, initialVolume) {
 	if (Number.isInteger(initialVolume)) {
 		args.push('--vol', initialVolume);
 	}
-	
+
 	return args;
 
 }
@@ -50,7 +54,7 @@ function buildArgs (source, givenOutput, loop, initialVolume) {
 
 // ----- Omx Class ----- //
 
-function Omx (source, output, loop, initialVolume) {
+function Omx (source, output, loop, initialVolume, showOsd) {
 
 	// ----- Local Vars ----- //
 
@@ -77,9 +81,10 @@ function Omx (source, output, loop, initialVolume) {
 	}
 
 	// Spawns the omxplayer process.
-	function spawnPlayer (src, out, loop, initialVolume) {
+	function spawnPlayer (src, out, loop, initialVolume, showOsd) {
 
-		let args = buildArgs(src, out, loop, initialVolume);
+		let args = buildArgs(src, out, loop, initialVolume, showOsd);
+		console.log('args for omxplayer:', args);
 		let omxProcess = spawn('omxplayer', args);
 		open = true;
 
@@ -108,23 +113,23 @@ function Omx (source, output, loop, initialVolume) {
 	// ----- Setup ----- //
 
 	if (source) {
-		player = spawnPlayer(source, output, loop, initialVolume);
+		player = spawnPlayer(source, output, loop, initialVolume, showOsd);
 	}
 
 	// ----- Methods ----- //
 
 	// Restarts omxplayer with a new source.
-	omxplayer.newSource = (src, out, loop, initialVolume) => {
+	omxplayer.newSource = (src, out, loop, initialVolume, showOsd) => {
 
 		if (open) {
 
-			player.on('close', () => { player = spawnPlayer(src, out, loop, initialVolume); });
+			player.on('close', () => { player = spawnPlayer(src, out, loop, initialVolume, showOsd); });
 			player.removeListener('close', updateStatus);
 			writeStdin('q');
 
 		} else {
 
-			player = spawnPlayer(src, out, loop, initialVolume);
+			player = spawnPlayer(src, out, loop, initialVolume, showOsd);
 
 		}
 
