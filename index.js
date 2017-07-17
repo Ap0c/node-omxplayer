@@ -9,7 +9,7 @@ let EventEmitter = require('events');
 // ----- Setup ----- //
 
 // The permitted audio outputs, local means via the 3.5mm jack.
-let ALLOWED_OUTPUTS = ['hdmi', 'local', 'both'];
+let ALLOWED_OUTPUTS = ['hdmi', 'local', 'both', 'alsa'];
 
 
 // ----- Functions ----- //
