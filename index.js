@@ -15,7 +15,7 @@ let ALLOWED_OUTPUTS = ['hdmi', 'local', 'both', 'alsa'];
 // ----- Functions ----- //
 
 // Creates an array of arguments to pass to omxplayer.
-function buildArgs (source, givenOutput, loop, initialVolume, showOsd) {
+function buildArgs (source, givenOutput, loop, initialVolume, showOsd, showBlank) {
 	let output = '';
 
 	if (givenOutput) {
@@ -35,7 +35,12 @@ function buildArgs (source, givenOutput, loop, initialVolume, showOsd) {
 		osd = showOsd;
 	}
 
-	let args = [source, '-o', output, '--blank', osd ? '' : '--no-osd'];
+	let blank = true;
+	if(!showBlank) {
+		blank = false;
+	}
+
+	let args = [source, '-o', output, blank ? '--blank' : '', osd ? '' : '--no-osd'];
 
 	// Handle the loop argument, if provided
 	if (loop) {
