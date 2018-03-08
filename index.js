@@ -61,6 +61,7 @@ function Omx (source, output, loop, initialVolume, showOsd) {
 	let omxplayer = new EventEmitter();
 	let player = null;
 	let open = false;
+	let parameters = {};
 
 	// ----- Local Functions ----- //
 
@@ -68,7 +69,7 @@ function Omx (source, output, loop, initialVolume, showOsd) {
 	function updateStatus () {
 
 		open = false;
-		omxplayer.emit('close');
+		omxplayer.emit('close', parameters);
 
 	}
 
@@ -82,6 +83,14 @@ function Omx (source, output, loop, initialVolume, showOsd) {
 
 	// Spawns the omxplayer process.
 	function spawnPlayer (src, out, loop, initialVolume, showOsd) {
+
+		parameters = {
+			'source': src,
+			'output': out,
+			'loop': loop,
+			'initialVolume': initialVolume,
+			'showOsd': showOsd
+		};
 
 		let args = buildArgs(src, out, loop, initialVolume, showOsd);
 		console.log('args for omxplayer:', args);
