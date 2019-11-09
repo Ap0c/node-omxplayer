@@ -12,7 +12,7 @@ interface NodeOmxPlayerStatic {
 	 * @param loop (optional): Loop state, if set to true, will loop file if it is seekable. If left blank will default to false.
 	 * @param initialVolume (optional): The initial volume, omxplayer will start with this value (in millibels). If left blank will default to 0.
 	 */
-	(source?: String, output?: String, loop?: Boolean, initialVolume?: Number, showOsd?: Boolean): NodeOmxPlayer;
+	(source?: String, output?: String, loop?: Boolean, initialVolume?: Number, showOsd?: Boolean, extraArgs?:any): NodeOmxPlayer;
 }
 
 interface NodeOmxPlayer extends Event {
@@ -23,7 +23,7 @@ interface NodeOmxPlayer extends Event {
 	 * @param loop (optional): Loop state, if set to true, will loop file if it is seekable. If left blank will default to false.
 	 * @param initialVolume (optional): The initial volume, omxplayer will start with this value (in millibels). If left blank will default to 0.
 	 */
-	newSource(source: String, output?: String, loop?: Boolean, initialVolume?: Number): void;
+	newSource(source: String, output?: String, loop?: Boolean, initialVolume?: Number, extraArgs?:any): void;
 
 	/**
 	 * Resumes playback.

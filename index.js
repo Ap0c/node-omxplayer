@@ -15,7 +15,7 @@ let ALLOWED_OUTPUTS = ['hdmi', 'local', 'both', 'alsa'];
 // ----- Functions ----- //
 
 // Creates an array of arguments to pass to omxplayer.
-function buildArgs (source, givenOutput, loop, initialVolume, showOsd) {
+function buildArgs (source, givenOutput, loop, initialVolume, showOsd, extraArgs) {
 	let output = '';
 
 	if (givenOutput) {
@@ -35,7 +35,12 @@ function buildArgs (source, givenOutput, loop, initialVolume, showOsd) {
 		osd = showOsd;
 	}
 
-	let args = [source, '-o', output, '--blank', osd ? '' : '--no-osd'];
+	const argsArray = [];
+	for (let [key, value] of Object.entries(extraArgs)){
+		argsArray.push(key, value);
+	}
+
+	let args = [source, '-o', output, '--blank', osd ? '' : '--no-osd', ...argsArray];
 
 	// Handle the loop argument, if provided
 	if (loop) {
@@ -54,7 +59,7 @@ function buildArgs (source, givenOutput, loop, initialVolume, showOsd) {
 
 // ----- Omx Class ----- //
 
-function Omx (source, output, loop, initialVolume, showOsd) {
+function Omx (source, output, loop, initialVolume, showOsd, extraArgs) {
 
 	// ----- Local Vars ----- //
 
@@ -83,7 +88,7 @@ function Omx (source, output, loop, initialVolume, showOsd) {
 	// Spawns the omxplayer process.
 	function spawnPlayer (src, out, loop, initialVolume, showOsd) {
 
-		let args = buildArgs(src, out, loop, initialVolume, showOsd);
+		let args = buildArgs(src, out, loop, initialVolume, showOsd, extraArgs);
 		console.log('args for omxplayer:', args);
 		let omxProcess = spawn('omxplayer', args);
 		open = true;
