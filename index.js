@@ -36,8 +36,10 @@ function buildArgs (source, givenOutput, loop, initialVolume, showOsd, extraArgs
 	}
 
 	const argsArray = [];
-	for (let [key, value] of Object.entries(extraArgs)){
-		argsArray.push(key, value);
+	if (extraArgs) {
+		for (let [key, value] of Object.entries(extraArgs)){
+			argsArray.push(key, value);
+		}
 	}
 
 	let args = [source, '-o', output, '--blank', osd ? '' : '--no-osd', ...argsArray];
@@ -79,16 +81,15 @@ function Omx (source, output, loop, initialVolume, showOsd, extraArgs) {
 
 	// Emits an error event, with a given message.
 	function emitError (message) {
-
 		open = false;
 		omxplayer.emit('error', message);
 
 	}
 
 	// Spawns the omxplayer process.
-	function spawnPlayer (src, out, loop, initialVolume, showOsd) {
+	function spawnPlayer (src, out, loop, initialVolume, showOsd, cmdArgs) {
 
-		let args = buildArgs(src, out, loop, initialVolume, showOsd, extraArgs);
+		let args = buildArgs(src, out, loop, initialVolume, showOsd, cmdArgs);
 		console.log('args for omxplayer:', args);
 		let omxProcess = spawn('omxplayer', args);
 		open = true;
@@ -118,23 +119,23 @@ function Omx (source, output, loop, initialVolume, showOsd, extraArgs) {
 	// ----- Setup ----- //
 
 	if (source) {
-		player = spawnPlayer(source, output, loop, initialVolume, showOsd);
+		player = spawnPlayer(source, output, loop, initialVolume, showOsd, extraArgs);
 	}
 
 	// ----- Methods ----- //
 
 	// Restarts omxplayer with a new source.
-	omxplayer.newSource = (src, out, loop, initialVolume, showOsd) => {
+	omxplayer.newSource = (src, out, loop, initialVolume, showOsd, extraArgs) => {
 
 		if (open) {
 
-			player.on('close', () => { player = spawnPlayer(src, out, loop, initialVolume, showOsd); });
+			player.on('close', () => { player = spawnPlayer(src, out, loop, initialVolume, showOsd, extraArgs); });
 			player.removeListener('close', updateStatus);
 			writeStdin('q');
 
 		} else {
 
-			player = spawnPlayer(src, out, loop, initialVolume, showOsd);
+			player = spawnPlayer(src, out, loop, initialVolume, showOsd, extraArgs);
 
 		}
 
