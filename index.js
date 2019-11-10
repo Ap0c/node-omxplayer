@@ -36,10 +36,8 @@ function buildArgs (source, givenOutput, loop, initialVolume, showOsd, extraArgs
 	}
 
 	const argsArray = [];
-	if (extraArgs) {
-		for (let [key, value] of Object.entries(extraArgs)){
-			argsArray.push(key, value);
-		}
+	for (let [key, value] of Object.entries(extraArgs)){
+		argsArray.push(key, value);
 	}
 
 	let args = [source, '-o', output, '--blank', osd ? '' : '--no-osd', ...argsArray];
@@ -87,9 +85,9 @@ function Omx (source, output, loop, initialVolume, showOsd, extraArgs) {
 	}
 
 	// Spawns the omxplayer process.
-	function spawnPlayer (src, out, loop, initialVolume, showOsd, cmdArgs) {
-
-		let args = buildArgs(src, out, loop, initialVolume, showOsd, cmdArgs);
+	function spawnPlayer (src, out, loop, initialVolume, showOsd, cmdLineArgs) {
+		console.log('CMD line args: ', cmdLineArgs);
+		let args = buildArgs(src, out, loop, initialVolume, showOsd, cmdLineArgs);
 		console.log('args for omxplayer:', args);
 		let omxProcess = spawn('omxplayer', args);
 		open = true;
@@ -126,9 +124,8 @@ function Omx (source, output, loop, initialVolume, showOsd, extraArgs) {
 
 	// Restarts omxplayer with a new source.
 	omxplayer.newSource = (src, out, loop, initialVolume, showOsd, extraArgs) => {
-
+		console.log('Spawning new player, extra args:', extraArgs);
 		if (open) {
-
 			player.on('close', () => { player = spawnPlayer(src, out, loop, initialVolume, showOsd, extraArgs); });
 			player.removeListener('close', updateStatus);
 			writeStdin('q');
