@@ -148,8 +148,8 @@ function Omx (source, output, loop, initialVolume, showOsd) {
 	omxplayer.quit = () => { writeStdin('q'); };
 	omxplayer.subtitles = () => { writeStdin('s'); };
 	omxplayer.info = () => { writeStdin('z'); };
-	omxplayer.incSpeed = () => { writeStdin('1'); };
-	omxplayer.decSpeed = () => { writeStdin('2'); };
+	omxplayer.incSpeed = () => { writeStdin('2'); };
+	omxplayer.decSpeed = () => { writeStdin('1'); };
 	omxplayer.prevChapter = () => { writeStdin('i'); };
 	omxplayer.nextChapter = () => { writeStdin('o'); };
 	omxplayer.prevAudio = () => { writeStdin('j'); };
