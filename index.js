@@ -82,7 +82,7 @@ function Omx (source, output, loop, initialVolume, showOsd, startAt) {
 	function emitError (message) {
 
 		open = false;
-		// omxplayer.emit('error', message);
+		omxplayer.emit('error', message);
 
 	}
 
@@ -111,7 +111,7 @@ function Omx (source, output, loop, initialVolume, showOsd, startAt) {
 		if (open) {
 			player.stdin.write(value);
 		} else {
-			// throw new Error('Player is closed.');
+			throw new Error('Player is closed.');
 		}
 
 	}
