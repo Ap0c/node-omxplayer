@@ -4,8 +4,6 @@
 
 let spawn = require('child_process').spawn;
 let EventEmitter = require('events');
-const { start } = require('repl');
-const { time } = require('console');
 
 
 // ----- Setup ----- //
