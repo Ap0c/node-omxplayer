@@ -11,8 +11,9 @@ interface NodeOmxPlayerStatic {
 	 * @param output (optional): The audio output, if left blank will default to 'local', can be one of: "local", "hdmi", "both"
 	 * @param loop (optional): Loop state, if set to true, will loop file if it is seekable. If left blank will default to false.
 	 * @param initialVolume (optional): The initial volume, omxplayer will start with this value (in millibels). If left blank will default to 0.
+	 * @param startAt (optional): The start position of the video (in seconds).
 	 */
-	(source?: String, output?: String, loop?: Boolean, initialVolume?: Number, showOsd?: Boolean): NodeOmxPlayer;
+	(source?: String, output?: String, loop?: Boolean, initialVolume?: Number, showOsd?: Boolean, startAt?: number): NodeOmxPlayer;
 }
 
 interface NodeOmxPlayer extends Event {
@@ -35,7 +36,7 @@ interface NodeOmxPlayer extends Event {
 	 */
 	pause(): void;
 
-	/** 
+	/**
 	 * Increases the volume.
 	 */
 	volUp(): void;
