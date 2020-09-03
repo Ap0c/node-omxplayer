@@ -15,7 +15,7 @@ let ALLOWED_OUTPUTS = ['hdmi', 'local', 'both', 'alsa'];
 // ----- Functions ----- //
 
 // Creates an array of arguments to pass to omxplayer.
-function buildArgs (source, givenOutput, loop, initialVolume, showOsd) {
+function buildArgs (source, givenOutput, loop, initialVolume, showOsd, startAt) {
 	let output = '';
 
 	if (givenOutput) {
@@ -33,9 +33,13 @@ function buildArgs (source, givenOutput, loop, initialVolume, showOsd) {
 	let osd = false;
 	if (showOsd) {
 		osd = showOsd;
-	}
+    }
 
-	let args = [source, '-o', output, '--blank', osd ? '' : '--no-osd'];
+    let args = [source, '-o', output, '--blank', osd ? '' : '--no-osd'];
+
+    if (Number.isInteger(startAt) && startAt >= 0) {
+        args.push('--pos', startAt);
+    }
 
 	// Handle the loop argument, if provided
 	if (loop) {
@@ -54,13 +58,13 @@ function buildArgs (source, givenOutput, loop, initialVolume, showOsd) {
 
 // ----- Omx Class ----- //
 
-function Omx (source, output, loop, initialVolume, showOsd) {
+function Omx (source, output, loop, initialVolume, showOsd, startAt) {
 
 	// ----- Local Vars ----- //
 
 	let omxplayer = new EventEmitter();
 	let player = null;
-	let open = false;
+    let open = false;
 
 	// ----- Local Functions ----- //
 
@@ -81,9 +85,9 @@ function Omx (source, output, loop, initialVolume, showOsd) {
 	}
 
 	// Spawns the omxplayer process.
-	function spawnPlayer (src, out, loop, initialVolume, showOsd) {
+	function spawnPlayer (src, out, loop, initialVolume, showOsd, startAt) {
 
-		let args = buildArgs(src, out, loop, initialVolume, showOsd);
+		let args = buildArgs(src, out, loop, initialVolume, showOsd, startAt);
 		console.log('args for omxplayer:', args);
 		let omxProcess = spawn('omxplayer', args);
 		open = true;
@@ -113,7 +117,7 @@ function Omx (source, output, loop, initialVolume, showOsd) {
 	// ----- Setup ----- //
 
 	if (source) {
-		player = spawnPlayer(source, output, loop, initialVolume, showOsd);
+		player = spawnPlayer(source, output, loop, initialVolume, showOsd, startAt);
 	}
 
 	// ----- Methods ----- //
